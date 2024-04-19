@@ -54,7 +54,7 @@ const TaskItem = ({
 
   return (
     <div>
-      <div className="task-item" key={task.id}>
+      <div className="task-item">
         <TaskCheckbox task={task} onCheckboxChange={onCheckboxChange} />
         <div className="task-item-content">
           <div style={{ width: "100%" }} onClick={() => onContentClick(task.id)}>

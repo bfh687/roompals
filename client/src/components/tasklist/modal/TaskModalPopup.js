@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
 import { ActiveScreen } from "../../generic/ActiveScreen";
-import TaskModalSelectField from "./TaskModalSelectField";
-import TaskModalTextField from "./TaskModalTextField";
+import SelectField from "./SelectField";
+import TextField from "./TextField";
 
 const TaskModalPopup = ({ task, onSave, onDelete, onClickOutside }) => {
   const modalRef = useRef();
@@ -86,20 +86,20 @@ const TaskModalPopup = ({ task, onSave, onDelete, onClickOutside }) => {
         </div>
         <div>
           <div>
-            <TaskModalTextField caption="Title" text={content} onTextChange={setContent} />
-            <TaskModalSelectField
+            <TextField caption="Title" text={content} onTextChange={setContent} />
+            <SelectField
               label="Responsibility"
               values={["test user 1", "test user 2"]}
               defaultValue={task.responsible}
               onChange={setResponsible}
             />
-            <TaskModalSelectField
+            <SelectField
               label="Difficulty"
               values={["Trivial", "Easy", "Medium", "Hard"]}
               defaultValue={task.difficulty}
               onChange={setDifficulty}
             />
-            <TaskModalSelectField
+            <SelectField
               label="Repeats"
               values={["Daily"]}
               defaultValue={task.repeats}

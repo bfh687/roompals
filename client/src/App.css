@@ -15,12 +15,6 @@
   align-items: center;
 }
 
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .center-horizontal {
   display: flex;
   justify-content: center;
@@ -33,6 +27,11 @@
 
 .flex {
   display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .no-display {
@@ -313,6 +312,68 @@
 
 .text-color {
   color: #cccac6;
+}
+
+.bar-empty {
+  margin-top: 12px;
+  height: 13px;
+  width: 30px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.bar-filled {
+  margin-top: 12px;
+  height: 13px;
+  width: 120px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.health-bar-empty-color {
+  background-color: #2d1216;
+}
+
+.health-bar-filled-color {
+  background-color: #c36c79;
+}
+
+.xp-bar-empty-color {
+  background-color: #122;
+}
+
+.xp-bar-filled-color {
+  background-color: #469d86;
+}
+
+#nav,
+#nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#nav a {
+  display: block;
+  width: 100%;
+}
+
+#nav li {
+  float: left;
+  width: 100%;
+}
+
+#nav li ul {
+  position: absolute;
+  left: -999em;
+}
+
+#nav li:hover ul {
+  left: auto;
 }
 
 @keyframes slide-down {

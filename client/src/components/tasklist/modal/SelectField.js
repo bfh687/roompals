@@ -1,6 +1,6 @@
 import React from "react";
 
-const TaskModalSelectField = ({ label, values, defaultValue, onChange }) => {
+const SelectField = ({ label, values, defaultValue, onChange }) => {
   return (
     <div className="task-modal-field-container">
       <div className="text-color">{label}</div>
@@ -20,4 +20,4 @@ const TaskModalSelectField = ({ label, values, defaultValue, onChange }) => {
   );
 };
 
-export default TaskModalSelectField;
+export default SelectField;
