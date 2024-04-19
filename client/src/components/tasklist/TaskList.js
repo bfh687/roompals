@@ -71,6 +71,7 @@ const TaskList = ({ type }) => {
   const addTask = async (task) => {
     // optimistically update tasks/ui
     const tempId = Date.now();
+    const partyId = 1;
 
     const newTasks = [...tasks];
     const newTask = {
@@ -83,12 +84,12 @@ const TaskList = ({ type }) => {
     setTasks(newTasks);
 
     // handle server response
-    await fetch("http://localhost:3000/api/tasks", {
+    await fetch(`http://localhost:3000/api/party/${partyId}/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ content: task, type: type }),
+      body: JSON.stringify({ partyId: partyId, content: task, type: type }),
     })
       .then((res) => res.json())
       .then((res) => {
