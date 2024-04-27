@@ -16,9 +16,9 @@ router.post("/", async (req, res) => {
   await pool
     .query(query, [name, username, email, salted_hash, salt])
     .then((result) => {
-      const id = result.rows[0].user_id;
+      const user_id = result.rows[0].user_id;
       const token = jwt.sign(
-        { id: id, name: name, username: username, email: email },
+        { user_id: user_id, name: name, username: username, email: email },
         process.env.JWT_SECRET,
         {
           expiresIn: "7 days",

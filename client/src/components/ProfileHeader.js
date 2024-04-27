@@ -3,10 +3,16 @@ import PlusIcon from "./icons/PlusIcon";
 
 import { useState } from "react";
 import AddPalModalPopup from "./AddPalModalPopup";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const ProfileHeader = () => {
   const [showPalModal, setShowPalModal] = useState(false);
   const [partyMembers, setPartyMembers] = useState([{}]);
+
+  const auth = useAuth();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // load profile data
@@ -16,7 +22,6 @@ const ProfileHeader = () => {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           setPartyMembers(res);
         })
         .catch((err) => console.log(err));
@@ -40,7 +45,9 @@ const ProfileHeader = () => {
               width: "96px",
               height: "96px",
               borderRadius: "10px",
+              cursor: "pointer",
             }}
+            onClick={() => navigate(`/user/${partyMembers[0].username}`)}
           />
         </div>
         <div style={{ paddingTop: "12px" }} className="flex-column text-color">
@@ -87,7 +94,9 @@ const ProfileHeader = () => {
                       width: "50px",
                       height: "50px",
                       borderRadius: "50%",
+                      cursor: "pointer",
                     }}
+                    onClick={() => navigate(`/user/${pal.username}`)}
                   />
                   <div style={{ fontSize: "smaller", fontWeight: "bold", padding: "3px" }}>
                     {pal.name}
@@ -129,6 +138,7 @@ const ProfileHeader = () => {
       </div>
       {showPalModal && (
         <AddPalModalPopup
+          partyId={1}
           partyMembers={partyMembers}
           onClickOutside={() => setShowPalModal(false)}
         />

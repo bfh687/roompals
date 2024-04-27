@@ -2,16 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import { ActiveScreen } from "./generic/ActiveScreen";
 import TextField from "./tasklist/modal/TextField";
+import { useNavigate } from "react-router-dom";
 
-export const AddPalModalPopup = ({ partyMembers, onClickOutside }) => {
+export const AddPalModalPopup = ({ partyId, partyMembers, onClickOutside }) => {
   const modalRef = useRef();
   useOnClickOutside(modalRef, () => {
     onClickOutside();
   });
 
   const [email, setEmail] = useState("");
-
   const [requests, setRequests] = useState([{}]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setRequests(partyMembers.filter((member) => member.verified === 0));
@@ -31,6 +33,17 @@ export const AddPalModalPopup = ({ partyMembers, onClickOutside }) => {
         newRequests.push(res);
         setRequests(newRequests);
         setEmail("");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const deleteRequest = async (userId) => {
+    await fetch(`http://localhost:3000/api/party/${partyId}/members/${userId}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        const newRequests = [...requests].filter((member) => member.user_id !== userId);
+        setRequests(newRequests);
       })
       .catch((err) => console.log(err));
   };
@@ -68,47 +81,77 @@ export const AddPalModalPopup = ({ partyMembers, onClickOutside }) => {
           }}
         >
           If a user is associated with the email, they will be sent an invite request to join your
-          pals.
+          pals. *Currently accepts username
         </div>
-        <div style={{ padding: "12px 25px", fontSize: "medium" }}>
-          <div>Current Requests</div>
-          <div>
-            {requests.map((pal, index) => {
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    marginTop: "8px",
-                    width: "100%",
-                    backgroundColor: "#202424",
-                    borderRadius: "5px",
-                  }}
-                  key={index}
-                >
-                  <img
-                    src={pal.img}
-                    style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "5px",
-                    }}
-                  />
+        {requests.length !== 0 && (
+          <div style={{ padding: "12px 25px", fontSize: "medium" }}>
+            <div>Current Requests</div>
+            <div>
+              {requests.map((pal, index) => {
+                return (
                   <div
                     style={{
                       display: "flex",
-                      alignItems: "center",
-                      fontWeight: "bold",
-                      marginLeft: "12px",
-                      marginBottom: "3px",
+                      marginTop: requests.length == 0 ? "8px" : "0px",
+                      width: "100%",
+                      backgroundColor: "#202424",
+                      borderRadius: "5px",
+                      cursor: "pointer",
                     }}
+                    onClick={() => navigate(`/user/${pal.username}`)}
+                    key={index}
                   >
-                    {pal.username}
+                    <img
+                      src={pal.img}
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "5px",
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          fontWeight: "bold",
+                          marginLeft: "12px",
+                          marginBottom: "3px",
+                        }}
+                      >
+                        {pal.username}
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginBottom: "3px",
+                          marginRight: "5px",
+                          padding: "5px",
+                          fontWeight: "bold",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteRequest(pal.user_id);
+                        }}
+                      >
+                        X
+                      </div>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
         <div className="task-modal-delete-container">
           <button className="task-modal-save" onClick={() => sendPartyRequest(email)}>
             Send Request

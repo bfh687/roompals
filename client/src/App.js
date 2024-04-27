@@ -7,6 +7,9 @@ import Layout from "./layouts/Layout";
 import TasksPage from "./pages/TasksPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
+import IndexPage from "./pages/IndexPage";
+import DashboardPage from "./pages/DashboardPage";
 
 function App() {
   return (
@@ -16,6 +19,9 @@ function App() {
           <Route path="dashboard" element={<TasksPage />} />
           <Route path="register" element={<RegistrationPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="user/*" element={<ProfilePage />} />
+          <Route path="taskdashboard" element={<DashboardPage />} />
+          <Route index element={<IndexPage />} />
         </Route>
       </Routes>
     </Router>

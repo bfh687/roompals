@@ -1,28 +1,12 @@
 import React, { useState } from "react";
 import TextField from "../components/tasklist/modal/TextField";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
-
-  const login = async () => {
-    const base64Credentials = btoa(`${email}:${password}`);
-    await fetch("http://localhost:3000/api/auth", {
-      method: "GET",
-      headers: {
-        Authorization: `Basic ${base64Credentials}`,
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          navigate("/dashboard");
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+  const auth = useAuth();
 
   return (
     <>
@@ -55,7 +39,7 @@ const LoginPage = () => {
           />
         </div>
         <div className="task-modal-delete-container">
-          <button className="task-modal-save" onClick={() => login()}>
+          <button className="task-modal-save" onClick={() => auth.login(email, password)}>
             Login
           </button>
         </div>

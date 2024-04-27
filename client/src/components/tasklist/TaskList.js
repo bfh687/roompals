@@ -93,7 +93,7 @@ const TaskList = ({ type }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        const index = newTasks.findIndex((task) => task.id == tempId);
+        const index = newTasks.findIndex((task) => task.task_id == tempId);
         if (index !== -1) {
           const newerTasks = [...newTasks];
           newerTasks[index].id = res.id;
@@ -101,27 +101,26 @@ const TaskList = ({ type }) => {
         }
       })
       .catch((err) => {
-        console.log("here");
-        const newerTasks = newTasks.filter((task) => task.id !== tempId);
+        const newerTasks = newTasks.filter((task) => task.task_id !== tempId);
         setTasks(newerTasks);
       });
   };
 
-  const removeTask = (id) => {
-    const newTasks = tasks.filter((task) => task.id !== id);
+  const removeTask = (taskId) => {
+    const newTasks = tasks.filter((task) => task.task_id !== taskId);
     setTasks(newTasks);
-
-    fetch(`http://localhost:3000/api/tasks/${id}`, {
+    const partyId = 1;
+    fetch(`http://localhost:3000/api/party/${partyId}/tasks/${taskId}`, {
       method: "DELETE",
     }).catch((err) => {
-      console.log("here");
+      console.log(err);
     });
   };
 
   const onCheckboxChange = (id) => {
     setTasks((prevTasks) => {
       return prevTasks.map((task) => {
-        if (task.id === id) {
+        if (task.task_id === id) {
           return { ...task, checked: !task.checked };
         }
         return task;
@@ -199,11 +198,11 @@ const TaskList = ({ type }) => {
                 task={task}
                 selectedTask={selectedTask}
                 index={index}
-                key={task.id}
-                onCheckboxChange={() => onCheckboxChange(task.id)}
+                key={index}
+                onCheckboxChange={() => onCheckboxChange(task.task_id)}
                 onOptionMenu={() => setSelectedTask(index)}
                 onClick={() => setSelectedTask(index)}
-                onDelete={() => removeTask(task.id)}
+                onDelete={() => removeTask(task.task_id)}
               />
             ))
           ) : (

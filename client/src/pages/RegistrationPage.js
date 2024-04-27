@@ -15,8 +15,6 @@ const RegistrationPage = () => {
         },
         body: JSON.stringify({ name: name, email: email, password: password }),
       });
-
-      console.log(response);
     } catch (error) {
       console.error("Error:", error);
     }

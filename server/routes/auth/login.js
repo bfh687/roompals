@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
   const credentials = Buffer.from(base64Credentials, "base64").toString("ascii");
   const [email, password] = credentials.split(":");
 
-  const query = `SELECT user_id, name, username, email, password, salt, verified from users where email=$1`;
+  const query = `SELECT user_id, name, username, img, email, password, salt, verified from users where email=$1`;
   const values = [email];
 
   pool
@@ -46,10 +46,11 @@ router.get("/", async (req, res) => {
       if (salted_hash === expected_hash) {
         const token = jwt.sign(
           {
-            id: result.rows[0].user_id,
+            user_id: result.rows[0].user_id,
             name: result.rows[0].name,
             username: result.rows[0].username,
             email: email,
+            img: result.rows[0].img,
           },
           process.env.JWT_SECRET
         );
@@ -60,6 +61,11 @@ router.get("/", async (req, res) => {
 
         res.status(201).send({
           success: true,
+          user: {
+            name: result.rows[0].name,
+            username: result.rows[0].username,
+            img: result.rows[0].img,
+          },
           message: "Authentication Successful",
         });
       } else {
@@ -70,7 +76,6 @@ router.get("/", async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      console.log(err.stack);
       res.status(400).send({
         message: err.detail,
       });
