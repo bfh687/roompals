@@ -215,7 +215,24 @@ const ProfilePage = () => {
                       boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)",
                       borderRadius: "5px",
                     }}
-                  ></div>
+                  >
+                    <div
+                      style={{
+                        height: "100px",
+                        width: "100%",
+                        backgroundColor: "red",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <div>Activity</div>
+                      <div style={{ display: "flex" }}>
+                        <div style={{ whiteSpace: "nowrap" }}>April 2024</div>
+                        <hr style={{ width: "100%", height: "1px" }} />
+                      </div>
+                      <div>Completed 5 tasks</div>
+                    </div>
+                  </div>
                 ) : (
                   <Skeleton
                     style={{

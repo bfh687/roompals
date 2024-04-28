@@ -9,7 +9,7 @@ router.get(
   async (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
-      res.json({ success: "false", message: "No Auth Token" }).send();
+      res.json({ success: false, message: "No Auth Token" }).send();
       return;
     }
 

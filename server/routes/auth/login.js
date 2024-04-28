@@ -5,6 +5,7 @@ const { pool, generateHash } = require("../../utilities");
 const jwt = require("jsonwebtoken");
 
 router.get("/", async (req, res) => {
+  console.log("her");
   if (!req.headers.authorization) {
     res.status(401).json({
       success: false,
@@ -14,7 +15,9 @@ router.get("/", async (req, res) => {
   }
 
   const base64Credentials = req.headers.authorization.split(" ")[1];
-  const credentials = Buffer.from(base64Credentials, "base64").toString("ascii");
+  const credentials = Buffer.from(base64Credentials, "base64").toString(
+    "ascii"
+  );
   const [email, password] = credentials.split(":");
 
   const query = `SELECT user_id, name, username, img, email, password, salt, verified from users where email=$1`;
@@ -25,6 +28,7 @@ router.get("/", async (req, res) => {
     .then((result) => {
       if (result.rowCount == 0) {
         res.status(404).send({
+          success: false,
           message: "User Not Found",
         });
         return;
@@ -32,6 +36,7 @@ router.get("/", async (req, res) => {
 
       if (result.rows[0].verified == 0) {
         res.status(401).send({
+          success: false,
           message: "Email Not Verified",
         });
         return;
@@ -70,13 +75,14 @@ router.get("/", async (req, res) => {
         });
       } else {
         res.status(400).send({
+          success: false,
           message: "Credentials Did Not Match",
         });
       }
     })
     .catch((err) => {
-      console.log(err);
       res.status(400).send({
+        success: false,
         message: err.detail,
       });
     });

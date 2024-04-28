@@ -404,6 +404,19 @@
   font-size: 14px;
 }
 
+.navbar-dropdown-item {
+  width: 90%;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.navbar-dropdown-item:hover {
+  background-color: #222424;
+  transition: background-color 0.2s ease;
+}
+
 .text-input::placeholder {
   font-size: 16px;
   opacity: 0;
