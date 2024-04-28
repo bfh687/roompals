@@ -62,13 +62,23 @@ const ProfilePage = () => {
               }}
             />
           ) : (
-            <Skeleton height="100%" baseColor="#1b1d1e" highlightColor="#313131" />
+            <Skeleton
+              height="100%"
+              baseColor="#1b1d1e"
+              highlightColor="#313131"
+            />
           )}
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ paddingLeft: "25px", display: "flex" }}>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ marginTop: "-87.5px", width: "175px", height: "175px" }}>
+              <div
+                style={{
+                  marginTop: "-87.5px",
+                  width: "175px",
+                  height: "175px",
+                }}
+              >
                 {user.img ? (
                   <img
                     src={user.img}
@@ -108,13 +118,18 @@ const ProfilePage = () => {
                   Edit Profile
                 </div>
               )}
-              <div style={{ paddingLeft: "10px", paddingTop: "5px" }} className="text-color">
+              <div
+                style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                className="text-color"
+              >
                 <div style={{ fontWeight: "bold" }}>
                   {user.name ? (
                     user.name
                   ) : (
                     <Skeleton
-                      style={{ boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)" }}
+                      style={{
+                        boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)",
+                      }}
                       height="100%"
                       baseColor="#1b1d1e"
                       highlightColor="#313131"
@@ -126,7 +141,9 @@ const ProfilePage = () => {
                     "@" + user.username
                   ) : (
                     <Skeleton
-                      style={{ boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)" }}
+                      style={{
+                        boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)",
+                      }}
                       height="100%"
                       baseColor="#1b1d1e"
                       highlightColor="#313131"
@@ -201,7 +218,10 @@ const ProfilePage = () => {
                   ></div>
                 ) : (
                   <Skeleton
-                    style={{ boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)", borderRadius: "5px" }}
+                    style={{
+                      boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)",
+                      borderRadius: "5px",
+                    }}
                     height="100%"
                     baseColor="#1b1d1e"
                     highlightColor="#313131"

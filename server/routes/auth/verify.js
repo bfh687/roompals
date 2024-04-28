@@ -8,7 +8,10 @@ router.get(
   "/verify",
   async (req, res, next) => {
     const token = req.cookies.token;
-    if (!token) return;
+    if (!token) {
+      res.json({ success: "false", message: "No Auth Token" }).send();
+      return;
+    }
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
@@ -23,7 +26,8 @@ router.get(
     });
   },
   (req, res) => {
-    const query = "SELECT user_id,name,username,email,img FROM users WHERE user_id=$1";
+    const query =
+      "SELECT user_id,name,username,email,img FROM users WHERE user_id=$1";
     pool
       .query(query, [req.user.user_id])
       .then((result) => {
