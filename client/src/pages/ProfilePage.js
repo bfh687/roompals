@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import EditProfileModalPopup from "../components/EditProfileModalPopup";
 import { useAuth } from "../contexts/AuthContext";
 
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,7 +21,10 @@ const ProfilePage = () => {
       })
         .then((res) => res.json())
         .then((res) => setUser(res))
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          navigate("/");
+          console.log(err);
+        });
     };
 
     loadUser();
@@ -42,34 +48,46 @@ const ProfilePage = () => {
           overflow: "visible",
         }}
       >
-        <div>
-          <img
-            src={user.img2}
-            style={{
-              height: "200px",
-              maxWidth: "1200px",
-              width: "100%",
-              objectFit: "cover",
-              objectPosition: "center",
-              borderTopLeftRadius: "10px",
-              borderTopRightRadius: "10px",
-            }}
-          />
+        <div style={{ height: "200px", maxWidth: "1200px" }}>
+          {user.img2 ? (
+            <img
+              src={user.img2}
+              style={{
+                height: "100%",
+                width: "100%",
+                objectFit: "cover",
+                objectPosition: "center",
+                borderTopLeftRadius: "10px",
+                borderTopRightRadius: "10px",
+              }}
+            />
+          ) : (
+            <Skeleton height="100%" baseColor="#1b1d1e" highlightColor="#313131" />
+          )}
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ paddingLeft: "25px", display: "flex" }}>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ marginTop: "-87.5px" }}>
-                <img
-                  src={user.img}
-                  style={{
-                    height: "175px",
-                    width: "175px",
-                    borderRadius: "10%",
-                    backgroundColor: "#141616",
-                    boxShadow: "3px 3px 5px 5px rgba(0, 0, 0, 0.3)",
-                  }}
-                />
+              <div style={{ marginTop: "-87.5px", width: "175px", height: "175px" }}>
+                {user.img ? (
+                  <img
+                    src={user.img}
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      borderRadius: "10%",
+                      backgroundColor: "#141616",
+                      boxShadow: "3px 3px 5px 5px rgba(0, 0, 0, 0.3)",
+                    }}
+                  />
+                ) : (
+                  <Skeleton
+                    style={{ boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)" }}
+                    height="100%"
+                    baseColor="#1b1d1e"
+                    highlightColor="#313131"
+                  />
+                )}
               </div>
               {user.user_id == auth.user?.user_id && (
                 <div
@@ -78,7 +96,7 @@ const ProfilePage = () => {
                     height: "25px",
                     borderRadius: "5px",
                     display: "flex",
-                    marginTop: "5px",
+                    marginTop: "7px",
                     padding: "2px",
                     justifyContent: "center",
                     boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)",
@@ -91,8 +109,30 @@ const ProfilePage = () => {
                 </div>
               )}
               <div style={{ paddingLeft: "10px", paddingTop: "5px" }} className="text-color">
-                <div style={{ fontWeight: "bold" }}>{user.name}</div>
-                <div style={{ fontSize: "small" }}>@{user.username}</div>
+                <div style={{ fontWeight: "bold" }}>
+                  {user.name ? (
+                    user.name
+                  ) : (
+                    <Skeleton
+                      style={{ boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)" }}
+                      height="100%"
+                      baseColor="#1b1d1e"
+                      highlightColor="#313131"
+                    />
+                  )}
+                </div>
+                <div style={{ fontSize: "small" }}>
+                  {user.username ? (
+                    "@" + user.username
+                  ) : (
+                    <Skeleton
+                      style={{ boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)" }}
+                      height="100%"
+                      baseColor="#1b1d1e"
+                      highlightColor="#313131"
+                    />
+                  )}
+                </div>
               </div>
             </div>
             <div style={{ width: "100%" }}>
@@ -149,16 +189,25 @@ const ProfilePage = () => {
                   ></div>
                 </div>
               </div>
-              <div
-                style={{
-                  height: "500px",
-                  backgroundColor: "#1b1d1e",
-
-                  boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)",
-                  margin: "25px 25px",
-                  borderRadius: "5px",
-                }}
-              ></div>
+              <div style={{ height: "500px", margin: "25px 25px" }}>
+                {user.username ? (
+                  <div
+                    style={{
+                      backgroundColor: "#1b1d1e",
+                      height: "100%",
+                      boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)",
+                      borderRadius: "5px",
+                    }}
+                  ></div>
+                ) : (
+                  <Skeleton
+                    style={{ boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)", borderRadius: "5px" }}
+                    height="100%"
+                    baseColor="#1b1d1e"
+                    highlightColor="#313131"
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

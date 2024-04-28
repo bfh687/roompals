@@ -13,6 +13,8 @@ const TaskList = ({ type }) => {
   const [taskFilter, setTaskFilter] = useState(0);
   const [filteredTasks, setFilteredTasks] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   const [title, setTitle] = useState("");
 
   const filterOptions = ["All", "My Tasks", "Done"];
@@ -29,7 +31,10 @@ const TaskList = ({ type }) => {
         method: "GET",
       })
         .then((res) => res.json())
-        .then((res) => setTasks(res))
+        .then((res) => {
+          setTasks(res);
+          setLoading(false);
+        })
         .catch((err) => console.log(err));
     };
 

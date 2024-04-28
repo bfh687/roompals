@@ -60,7 +60,14 @@ const NavBar = () => {
           </div>
           <div>
             <button
-              style={{ cursor: "pointer", height: "35px", display: "flex", marginRight: "5px" }}
+              style={{
+                cursor: "pointer",
+                height: "35px",
+                display: "flex",
+                marginRight: "5px",
+                background: "none",
+                border: "none",
+              }}
               onClick={() => setShowNavbarDropdown(!showNavbarDropdown)}
             >
               <div style={{ display: "flex", alignItems: "center" }}>
@@ -78,6 +85,7 @@ const NavBar = () => {
                     strokeWidth={1.5}
                     stroke="currentColor"
                     style={{ width: "18px", height: "18px", marginTop: "5px" }}
+                    className="text-color"
                   >
                     <path
                       strokeLinecap="round"

@@ -18,10 +18,11 @@ const NavbarDropdown = ({ onClickOutside }) => {
         top: "50px",
         right: "5px",
         minWidth: "280px",
-        backgroundColor: "red",
+        backgroundColor: "#1b1d1e",
         borderRadius: "5px",
         display: "flex",
         flexDirection: "column",
+        boxShadow: "3px 3px 5px 5px rgba(0, 0, 0, 0.3)",
       }}
       className="text-color"
     >
@@ -30,7 +31,7 @@ const NavbarDropdown = ({ onClickOutside }) => {
           style={{
             width: "90%",
             height: "150px",
-            backgroundColor: "green",
+            backgroundColor: "#141616",
             borderRadius: "5px",
             marginTop: "10px",
             display: "flex",
@@ -65,7 +66,7 @@ const NavbarDropdown = ({ onClickOutside }) => {
           style={{
             display: "flex",
             justifyContent: "center",
-            marginTop: "10px",
+            marginTop: "5px",
             cursor: "pointer",
           }}
         >
@@ -75,7 +76,7 @@ const NavbarDropdown = ({ onClickOutside }) => {
               height: "36px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "blue",
+              backgroundColor: "#141616",
               borderRadius: "5px",
             }}
             onClick={() => {
@@ -90,7 +91,7 @@ const NavbarDropdown = ({ onClickOutside }) => {
           style={{
             display: "flex",
             justifyContent: "center",
-            marginTop: "10px",
+            marginTop: "5px",
             cursor: "pointer",
           }}
         >
@@ -100,18 +101,18 @@ const NavbarDropdown = ({ onClickOutside }) => {
               height: "36px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "blue",
+              backgroundColor: "#141616",
               borderRadius: "5px",
             }}
           >
             <span style={{ marginLeft: "10px" }}>Account Settings</span>
           </div>
         </div>
-        <hr style={{ width: "89%", color: "purple" }}></hr>
         <div
           style={{
             display: "flex",
             justifyContent: "center",
+            marginTop: "5px",
             marginBottom: "10px",
             cursor: "pointer",
           }}
@@ -122,7 +123,7 @@ const NavbarDropdown = ({ onClickOutside }) => {
               height: "36px",
               display: "flex",
               alignItems: "center",
-              backgroundColor: "blue",
+              backgroundColor: "#141616",
               borderRadius: "5px",
             }}
             onClick={() => {

@@ -8,6 +8,8 @@ router.get(
   "/verify",
   async (req, res, next) => {
     const token = req.cookies.token;
+    if (!token) return;
+
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         console.log(err);

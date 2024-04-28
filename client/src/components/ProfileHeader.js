@@ -6,6 +6,9 @@ import AddPalModalPopup from "./AddPalModalPopup";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 const ProfileHeader = () => {
   const [showPalModal, setShowPalModal] = useState(false);
   const [partyMembers, setPartyMembers] = useState([{}]);
@@ -39,16 +42,28 @@ const ProfileHeader = () => {
           }}
           className="horizontal-center"
         >
-          <img
-            src={partyMembers[0].img}
-            style={{
-              width: "96px",
-              height: "96px",
-              borderRadius: "10px",
-              cursor: "pointer",
-            }}
-            onClick={() => navigate(`/user/${partyMembers[0].username}`)}
-          />
+          <div style={{ width: "96px", height: "96px", borderRadius: "10px" }}>
+            {partyMembers.length !== 32 ? (
+              <img
+                src={partyMembers[0].img}
+                style={{
+                  cursor: "pointer",
+                  height: "100%",
+                  width: "100%",
+                  borderRadius: "10px",
+                }}
+                onClick={() => navigate(`/user/${partyMembers[0].username}`)}
+              />
+            ) : (
+              <Skeleton
+                style={{ boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)" }}
+                height="100%"
+                width="100%"
+                baseColor="#1b1d1e"
+                highlightColor="#313131"
+              />
+            )}
+          </div>
         </div>
         <div style={{ paddingTop: "12px" }} className="flex-column text-color">
           <div className="bold">{partyMembers[0].name}</div>
