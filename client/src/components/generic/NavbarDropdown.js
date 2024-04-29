@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import GearIcon from "../icons/GearIcon";
 import PowerIcon from "../icons/PowerIcon";
 import AtSignIcon from "../icons/AtSignIcon";
+import NotificationIcon from "../icons/NotificationIcon";
 
 const NavbarDropdown = ({ onClickOutside }) => {
   const dropdownRef = useRef();

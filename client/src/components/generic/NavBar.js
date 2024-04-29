@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import NavbarDropdown from "./NavbarDropdown";
 import { useNavigate } from "react-router-dom";
+import NotificationIcon from "../icons/NotificationIcon";
 
 const NavBar = () => {
   const auth = useAuth();
@@ -58,6 +59,27 @@ const NavBar = () => {
           >
             Dashboard
           </div>
+          <span
+            style={{
+              marginRight: "6px",
+              marginTop: "3px",
+              position: "relative",
+            }}
+          >
+            <div
+              style={{
+                width: "10px",
+                height: "10px",
+                borderRadius: "50%",
+                backgroundColor: "#c32940",
+                position: "absolute",
+                right: "0px",
+              }}
+            ></div>
+            <span style={{ cursor: "pointer" }}>
+              <NotificationIcon width={24} height={24} />
+            </span>
+          </span>
           <div>
             <button
               style={{
@@ -74,7 +96,11 @@ const NavBar = () => {
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
                     src={auth.user.img}
-                    style={{ height: "30px", width: "30px", borderRadius: "50%" }}
+                    style={{
+                      height: "30px",
+                      width: "30px",
+                      borderRadius: "50%",
+                    }}
                   />
                 </div>
                 <div style={{ padding: "0px 0px 0px 5px" }}>
@@ -97,7 +123,9 @@ const NavBar = () => {
               </div>
             </button>
             {showNavbarDropdown && (
-              <NavbarDropdown onClickOutside={() => setShowNavbarDropdown(false)} />
+              <NavbarDropdown
+                onClickOutside={() => setShowNavbarDropdown(false)}
+              />
             )}
           </div>
         </div>
