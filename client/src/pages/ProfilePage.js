@@ -123,8 +123,10 @@ const ProfilePage = () => {
                     borderRadius: "5px",
                     display: "flex",
                     marginTop: "7px",
+                    marginBottom: "8px",
                     padding: "2px",
                     justifyContent: "center",
+                    alignItems: "center",
                     boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)",
                     cursor: "pointer",
                   }}

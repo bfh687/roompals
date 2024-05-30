@@ -63,7 +63,10 @@ const EditProfileModalPopup = ({ user, onSave, onClickOutside }) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            padding: "25px",
+            paddingTop: "25px",
+            paddingRight: "25px",
+            paddingLeft: "25px",
+            paddingBottom: "12px",
           }}
         >
           <div
@@ -75,7 +78,10 @@ const EditProfileModalPopup = ({ user, onSave, onClickOutside }) => {
             Edit Profile
           </div>
           <div className="center">
-            <div className="task-modal-cancel text-color" onClick={() => onClickOutside()}>
+            <div
+              className="task-modal-cancel text-color"
+              onClick={() => onClickOutside()}
+            >
               Cancel
             </div>
             <button
@@ -89,11 +95,23 @@ const EditProfileModalPopup = ({ user, onSave, onClickOutside }) => {
           </div>
         </div>
         <div>
-          <div>
+          <div style={{ paddingBottom: "24px" }}>
             <TextField caption="Name" text={name} onTextChange={setName} />
-            <TextField caption="Username" text={username} onTextChange={setUsername} />
-            <TextField caption="Profile Picture" text={img} onTextChange={setImg} />
-            <TextField caption="Profile Header" text={img2} onTextChange={setImg2} />
+            <TextField
+              caption="Username"
+              text={username}
+              onTextChange={setUsername}
+            />
+            <TextField
+              caption="Profile Picture"
+              text={img}
+              onTextChange={setImg}
+            />
+            <TextField
+              caption="Profile Header"
+              text={img2}
+              onTextChange={setImg2}
+            />
           </div>
         </div>
       </div>
