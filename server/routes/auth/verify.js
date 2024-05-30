@@ -15,7 +15,9 @@ router.get(
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err || !decoded.verified) {
-        res.status(401).json({ success: false, message: "Could Not Verify User" });
+        res
+          .status(401)
+          .json({ success: false, message: "Could Not Verify User" });
         return;
       }
 
@@ -25,7 +27,8 @@ router.get(
     });
   },
   (req, res, next) => {
-    const query = "SELECT user_id,name,username,email,img FROM users WHERE user_id=$1";
+    const query =
+      "SELECT user_id,name,username,email,img,verified FROM users WHERE user_id=$1";
     pool
       .query(query, [req.user.user_id])
       .then((result) => {

@@ -20,7 +20,12 @@ const ProfilePage = () => {
         method: "GET",
       })
         .then((res) => res.json())
-        .then((res) => setUser(res))
+        .then((res) => {
+          if (!res.img) {
+            res.img = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+          }
+          setUser(res);
+        })
         .catch((err) => {
           navigate("/");
           console.log(err);
@@ -63,7 +68,11 @@ const ProfilePage = () => {
               }}
             />
           ) : (
-            <Skeleton height="100%" baseColor="#1b1d1e" highlightColor="#313131" />
+            <Skeleton
+              height="100%"
+              baseColor="#1b1d1e"
+              highlightColor="#313131"
+            />
           )}
         </div>
         <div
@@ -81,6 +90,7 @@ const ProfilePage = () => {
                   marginTop: "-87.5px",
                   width: "175px",
                   height: "175px",
+                  zIndex: "999",
                 }}
               >
                 {user.img ? (
@@ -96,7 +106,9 @@ const ProfilePage = () => {
                   />
                 ) : (
                   <Skeleton
-                    style={{ boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)" }}
+                    style={{
+                      boxShadow: "3px 3px 5px 2px rgba(0, 0, 0, 0.3)",
+                    }}
                     height="100%"
                     baseColor="#1b1d1e"
                     highlightColor="#313131"
@@ -122,7 +134,10 @@ const ProfilePage = () => {
                   Edit Profile
                 </div>
               )}
-              <div style={{ paddingLeft: "10px", paddingTop: "5px" }} className="text-color">
+              <div
+                style={{ paddingLeft: "10px", paddingTop: "5px" }}
+                className="text-color"
+              >
                 <div style={{ fontWeight: "bold" }}>
                   {user.name ? (
                     user.name

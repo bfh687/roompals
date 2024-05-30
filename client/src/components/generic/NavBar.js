@@ -10,7 +10,8 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const [showNavbarDropdown, setShowNavbarDropdown] = useState(false);
-  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
+  const [showNotificationDropdown, setShowNotificationDropdown] =
+    useState(false);
 
   return (
     <div
@@ -52,7 +53,13 @@ const NavBar = () => {
         </div>
       </div>
       {auth.user && (
-        <div style={{ display: "flex", alignItems: "center", paddingRight: "12px" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            paddingRight: "12px",
+          }}
+        >
           <div
             style={{
               cursor: "pointer",
@@ -73,7 +80,9 @@ const NavBar = () => {
               marginTop: "3px",
               position: "relative",
             }}
-            onClick={() => setShowNotificationDropdown(!showNotificationDropdown)}
+            onClick={() =>
+              setShowNotificationDropdown(!showNotificationDropdown)
+            }
           >
             {auth.user?.notifications?.length != 0 && (
               <div
@@ -116,7 +125,10 @@ const NavBar = () => {
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
-                    src={auth.user.img}
+                    src={
+                      auth.user.img ??
+                      "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                    }
                     style={{
                       height: "30px",
                       width: "30px",
@@ -144,16 +156,26 @@ const NavBar = () => {
               </div>
             </button>
             {showNavbarDropdown && (
-              <NavbarDropdown onClickOutside={() => setShowNavbarDropdown(false)} />
+              <NavbarDropdown
+                onClickOutside={() => setShowNavbarDropdown(false)}
+              />
             )}
             {showNotificationDropdown && (
-              <NotificationDropdown onClickOutside={() => setShowNotificationDropdown(false)} />
+              <NotificationDropdown
+                onClickOutside={() => setShowNotificationDropdown(false)}
+              />
             )}
           </div>
         </div>
       )}
       {!auth.user && (
-        <div style={{ display: "flex", alignItems: "center", paddingRight: "12px" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            paddingRight: "12px",
+          }}
+        >
           <div
             style={{
               cursor: "pointer",

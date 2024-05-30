@@ -49,7 +49,10 @@ const NavbarDropdown = ({ onClickOutside }) => {
             }}
           >
             <img
-              src={auth.user.img}
+              src={
+                auth.user.img ??
+                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              }
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </div>

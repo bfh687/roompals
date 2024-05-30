@@ -99,6 +99,7 @@ const OneTimePass = () => {
                 width: "22px",
                 fontSize: "x-large",
               }}
+              key={index}
               className="text-color text-input"
               onInput={(e) => updateOneTimePass(e.target.value, index)}
               onKeyDown={(e) => handleSpecialKeys(e, index)}
