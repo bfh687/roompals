@@ -23,7 +23,7 @@ const OneTimePass = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          navigate("/dashboard");
+          navigate("/taskdashboard");
         }
       })
       .catch((err) => {
@@ -74,7 +74,12 @@ const OneTimePass = () => {
         }}
       >
         <div
-          style={{ fontWeight: "400", fontSize: "42px", paddingTop: "12px", paddingBottom: "12px" }}
+          style={{
+            fontWeight: "400",
+            fontSize: "42px",
+            paddingTop: "12px",
+            paddingBottom: "12px",
+          }}
         >
           Verify Your Identity
         </div>
@@ -104,7 +109,11 @@ const OneTimePass = () => {
         })}
       </div>
       <div style={{ width: "328px", marginTop: "24px" }}>
-        <button className="form-button" onClick={() => validateOneTimePass()} ref={buttonRef}>
+        <button
+          className="form-button"
+          onClick={() => validateOneTimePass()}
+          ref={buttonRef}
+        >
           Continue
         </button>
       </div>

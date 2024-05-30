@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { pool, generateHash, generateSalt } = require("../../utilities");
+const {
+  pool,
+  generateHash,
+  generateSalt,
+  sendEmail,
+} = require("../../utilities");
+
 const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
@@ -17,14 +23,16 @@ router.post("/", async (req, res) => {
     return Math.floor(100000 + Math.random() * 900000);
   };
 
+  const otp = generateOTP();
   const query = `INSERT INTO users (name, username, email, password, salt, otp) 
                  VALUES ($1, $2, $3, $4, $5, $6) 
                  ON CONFLICT (email)
                  DO UPDATE SET name = EXCLUDED.name, password = EXCLUDED.password, salt = EXCLUDED.salt, otp = EXCLUDED.otp
                  WHERE users.verified = 0
                  RETURNING *`;
+
   await pool
-    .query(query, [name, username, email, salted_hash, salt, generateOTP()])
+    .query(query, [name, username, email, salted_hash, salt, otp])
     .then((result) => {
       // a verified user already exists for this email
       if (result.rowCount === 0) {
@@ -37,7 +45,13 @@ router.post("/", async (req, res) => {
 
       const user_id = result.rows[0].user_id;
       const token = jwt.sign(
-        { user_id: user_id, name: name, username: username, email: email, verified: false },
+        {
+          user_id: user_id,
+          name: name,
+          username: username,
+          email: email,
+          verified: false,
+        },
         process.env.JWT_SECRET,
         {
           expiresIn: "7 days",
@@ -47,6 +61,8 @@ router.post("/", async (req, res) => {
       res.cookie("token", token, {
         httpOnly: true,
       });
+
+      sendEmail(email, `Your One-Time Password: ${otp}`);
 
       res.status(200).send({
         success: true,
@@ -72,12 +88,16 @@ router.post(
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        res.status(401).json({ success: false, message: "Could Not Verify User" });
+        res
+          .status(401)
+          .json({ success: false, message: "Could Not Verify User" });
         return;
       }
 
       if (decoded.verified) {
-        res.status(401).json({ success: false, message: "User Already Verified" });
+        res
+          .status(401)
+          .json({ success: false, message: "User Already Verified" });
         return;
       }
 
@@ -85,17 +105,21 @@ router.post(
       next();
     });
   },
-  async (req, res) => {
+  async (req, res, next) => {
     const { otp } = req.body;
     const { email } = req.user;
 
     const query = `SELECT * FROM users WHERE email=$1`;
     await pool.query(query, [email]).then((result) => {
       if (result.rowCount === 0) {
-        res.status(401).json({ success: false, message: "User With Given Email Does Not Exist" });
+        res.status(401).json({
+          success: false,
+          message: "User With Given Email Does Not Exist",
+        });
       } else if (otp != result.rows[0].otp) {
-        console.log(otp + " " + result.rows[0].otp);
-        res.status(401).json({ success: false, message: "Provided OTP Is Not Valid" });
+        res
+          .status(401)
+          .json({ success: false, message: "Provided OTP Is Not Valid" });
       } else {
         req.user.verified = true;
         const token = jwt.sign(req.user, process.env.JWT_SECRET);
@@ -104,8 +128,14 @@ router.post(
           httpOnly: true,
         });
 
-        res.json({ success: true, message: "User Successfully Verified" });
+        next();
       }
+    });
+  },
+  async (req, res) => {
+    const query = `UPDATE users SET verified=1 WHERE email=$1`;
+    await pool.query(query, [req.user.email]).then(() => {
+      res.json({ success: true, message: "User Successfully Verified" });
     });
   }
 );
