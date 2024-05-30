@@ -5,7 +5,7 @@ import TaskZeroState from "./TaskZeroState";
 
 import { TaskListType, TaskListTitle } from "../../res/resx";
 
-const TaskList = ({ type }) => {
+const TaskList = ({ partyId, type }) => {
   const [task, setTask] = useState("");
   const [selectedTask, setSelectedTask] = useState(-1);
 
@@ -23,9 +23,6 @@ const TaskList = ({ type }) => {
 
   useEffect(() => {
     setTitle(getTaskListTitle());
-
-    const partyId = 1;
-
     const loadTasks = async () => {
       await fetch(`http://localhost:3000/api/party/${partyId}/tasks/${type}`, {
         method: "GET",

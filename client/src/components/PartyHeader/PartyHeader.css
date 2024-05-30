@@ -1,0 +1,60 @@
+.add-button-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #0e0f0f;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.add-button-wrapper {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.member-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.member-container {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.member-name {
+  font-size: smaller;
+  font-weight: bold;
+  padding: 3px;
+}
+
+.member-name-placeholder {
+  font-size: smaller;
+  font-weight: bold;
+  padding: 3px;
+  opacity: 0;
+}
+
+.member-self-icon {
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.member-self-icon-wrapper {
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
+}
+
+.member-self-container {
+  padding: 12px 12px 12px 24px;
+}

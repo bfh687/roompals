@@ -3,6 +3,7 @@ import useOnClickOutside from "../hooks/useOnClickOutside";
 import { ActiveScreen } from "./generic/ActiveScreen";
 import TextField from "./tasklist/modal/TextField";
 import { useNavigate } from "react-router-dom";
+import AnimationButton from "../pages/AnimationButton";
 
 export const AddPalModalPopup = ({ partyId, partyMembers, onClickOutside }) => {
   const modalRef = useRef();
@@ -10,7 +11,7 @@ export const AddPalModalPopup = ({ partyId, partyMembers, onClickOutside }) => {
     onClickOutside();
   });
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [requests, setRequests] = useState([{}]);
 
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ export const AddPalModalPopup = ({ partyId, partyMembers, onClickOutside }) => {
     setRequests(partyMembers.filter((member) => member.verified === 0));
   }, []);
 
-  const sendPartyRequest = async (username) => {
+  const sendPartyRequest = async () => {
+    if (!username) return;
+
     await fetch(`http://localhost:3000/api/party/${1}`, {
       method: "POST",
       headers: {
@@ -32,7 +35,7 @@ export const AddPalModalPopup = ({ partyId, partyMembers, onClickOutside }) => {
         const newRequests = [...requests];
         newRequests.push(res);
         setRequests(newRequests);
-        setEmail("");
+        setUsername("");
       })
       .catch((err) => console.log(err));
   };
@@ -58,7 +61,7 @@ export const AddPalModalPopup = ({ partyId, partyMembers, onClickOutside }) => {
             flexDirection: "column",
             justifyContent: "space-between",
             alignItems: "center",
-            padding: "25px 25px 15px 25px",
+            padding: "25px 25px 5px 25px",
           }}
         >
           <div
@@ -70,19 +73,7 @@ export const AddPalModalPopup = ({ partyId, partyMembers, onClickOutside }) => {
             Add Pals
           </div>
         </div>
-        <TextField caption={"Email"} text={email} onTextChange={setEmail} />
-        <div
-          style={{
-            padding: "8px 25px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "smaller",
-          }}
-        >
-          If a user is associated with the email, they will be sent an invite request to join your
-          pals. *Currently accepts username
-        </div>
+        <TextField caption={"username"} text={username} onTextChange={setUsername} autoFocus />
         {requests.length !== 0 && (
           <div style={{ padding: "12px 25px", fontSize: "medium" }}>
             <div>Current Requests</div>
@@ -94,6 +85,7 @@ export const AddPalModalPopup = ({ partyId, partyMembers, onClickOutside }) => {
                       display: "flex",
                       marginTop: requests.length == 0 ? "8px" : "0px",
                       width: "100%",
+                      marginTop: "5px",
                       backgroundColor: "#202424",
                       borderRadius: "5px",
                       cursor: "pointer",
@@ -153,9 +145,7 @@ export const AddPalModalPopup = ({ partyId, partyMembers, onClickOutside }) => {
           </div>
         )}
         <div className="task-modal-delete-container">
-          <button className="task-modal-save" onClick={() => sendPartyRequest(email)}>
-            Send Request
-          </button>
+          <AnimationButton text="Send Request" onClick={() => sendPartyRequest()} />
         </div>
       </div>
       <ActiveScreen />

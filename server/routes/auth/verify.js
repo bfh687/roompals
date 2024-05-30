@@ -9,14 +9,13 @@ router.get(
   async (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
-      res.json({ success: false, message: "No Auth Token" }).send();
+      res.json({ success: false, message: "No Auth Token" });
       return;
     }
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        console.log(err);
-        res.status(401).send();
+      if (err || !decoded.verified) {
+        res.status(401).json({ success: false, message: "Could Not Verify User" });
         return;
       }
 
@@ -25,9 +24,8 @@ router.get(
       next();
     });
   },
-  (req, res) => {
-    const query =
-      "SELECT user_id,name,username,email,img FROM users WHERE user_id=$1";
+  (req, res, next) => {
+    const query = "SELECT user_id,name,username,email,img FROM users WHERE user_id=$1";
     pool
       .query(query, [req.user.user_id])
       .then((result) => {
@@ -36,13 +34,25 @@ router.get(
 
         // update token if user updated their info
         if (user1 !== user2) {
-          const token = jwt.sign(user2, process.env.JWT_SECRET);
+          const token = jwt.sign(result.rows[0], process.env.JWT_SECRET);
           res.cookie("token", token, {
             httpOnly: true,
           });
         }
 
-        res.json({ user: result.rows[0] });
+        req.user = result.rows[0];
+        next();
+      })
+      .catch((err) => console.log(err));
+  },
+  (req, res) => {
+    const query = `SELECT * FROM party WHERE party.id IN 
+                  (SELECT party_id FROM party_members WHERE user_id=$1 AND verified=0)`;
+    pool
+      .query(query, [req.user.user_id])
+      .then((result) => {
+        req.user.notifications = result.rows;
+        res.json({ success: true, user: req.user });
       })
       .catch((err) => console.log(err));
   }

@@ -36,6 +36,7 @@ const ProfilePage = () => {
         display: "flex",
         justifyContent: "center",
         marginTop: "25px",
+        height: "100%",
       }}
     >
       <div
@@ -62,14 +63,17 @@ const ProfilePage = () => {
               }}
             />
           ) : (
-            <Skeleton
-              height="100%"
-              baseColor="#1b1d1e"
-              highlightColor="#313131"
-            />
+            <Skeleton height="100%" baseColor="#1b1d1e" highlightColor="#313131" />
           )}
         </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            paddingBottom: "24px",
+          }}
+        >
           <div style={{ paddingLeft: "25px", display: "flex" }}>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div
@@ -118,10 +122,7 @@ const ProfilePage = () => {
                   Edit Profile
                 </div>
               )}
-              <div
-                style={{ paddingLeft: "10px", paddingTop: "5px" }}
-                className="text-color"
-              >
+              <div style={{ paddingLeft: "10px", paddingTop: "5px" }} className="text-color">
                 <div style={{ fontWeight: "bold" }}>
                   {user.name ? (
                     user.name
@@ -206,7 +207,7 @@ const ProfilePage = () => {
                   ></div>
                 </div>
               </div>
-              <div style={{ height: "500px", margin: "25px 25px" }}>
+              <div style={{ height: "100%", margin: "25px 25px" }}>
                 {user.username ? (
                   <div
                     style={{

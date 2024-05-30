@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
   const auth = useAuth();
-
   const navigate = useNavigate();
 
   return (
@@ -50,7 +49,7 @@ const DashboardPage = () => {
                 margin: "5px",
                 cursor: "pointer",
               }}
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/dashboard", { state: 1 })}
             >
               <div
                 style={{

@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         .then((res) => {
           setUser(res.user);
           const url = window.location.pathname;
-          if (!res.user && (url !== "/login" || url !== "/register")) {
+          if (!res.user && url !== "/login" && url !== "/register" && url !== "/") {
             navigate("/login");
           } else if (res.user && (url === "/login" || url === "/register")) {
             navigate("/dashboard");
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
       .then((res) => {
         if (res.success) {
           setUser(res.user);
-          navigate("/dashboard");
+          navigate("/taskdashboard");
         }
       })
       .catch((err) => console.log(err));
@@ -79,9 +79,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, refresh, login, logout }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user, refresh, login, logout }}>{children}</AuthContext.Provider>
   );
 };
 

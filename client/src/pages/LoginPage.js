@@ -12,10 +12,7 @@ const LoginPage = () => {
   return (
     <>
       <div style={{ marginTop: "150px" }}>
-        <div
-          className="text-color"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
+        <div className="text-color" style={{ display: "flex", justifyContent: "center" }}>
           <form onSubmit={(e) => e.preventDefault()}>
             <div
               style={{
@@ -23,7 +20,7 @@ const LoginPage = () => {
                 justifyContent: "center",
                 fontSize: "32px",
                 fontWeight: "bold",
-                marginBottom: "16px",
+                marginBottom: "36px",
               }}
             >
               Login
@@ -36,6 +33,7 @@ const LoginPage = () => {
                 className="text-input text-color"
                 placeholder=""
                 required
+                autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -78,18 +76,7 @@ const LoginPage = () => {
               Forgot password?
             </div>
             <div style={{ width: "328px", marginTop: "24px" }}>
-              <button
-                style={{
-                  width: "100%",
-                  padding: "0.9rem",
-                  fontSize: "16px",
-                  borderRadius: "5px",
-                  backgroundColor: "#10a37f",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-                onClick={() => auth.login(email, password)}
-              >
+              <button className="form-button" onClick={() => auth.login(email, password)}>
                 Continue
               </button>
             </div>

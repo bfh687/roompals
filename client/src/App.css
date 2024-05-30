@@ -274,12 +274,15 @@
   resize: none;
   width: 100%;
   height: 32px;
-  background-color: #202424;
+  background: transparent;
   border-radius: 3px;
   border: none;
+  outline: 1px #888888 solid;
+  transition: outline 0.1s;
 }
 
-.task-modal-title:focus {
+.task-modal-title:focus,
+.task-modal-title:hover {
   outline: 1px #5b9b87 solid;
 }
 
@@ -315,17 +318,14 @@
 }
 
 .bar-empty {
-  margin-top: 12px;
+  flex-grow: 1;
   height: 13px;
-  width: 30px;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }
 
 .bar-filled {
-  margin-top: 12px;
   height: 13px;
-  width: 120px;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
 }
@@ -355,10 +355,65 @@
   position: relative;
 }
 
+.form-button {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: #10a37f;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-button:hover {
+  background-color: #10a37ee0;
+}
+
+.img-hoverable {
+  cursor: pointer;
+  transition: filter 0.3s;
+}
+
+.img-hoverable:hover {
+  filter: brightness(75%);
+}
+
+.hoverable {
+  transition: filter 0.15s;
+}
+
+.hoverable:hover {
+  filter: brightness(80%);
+}
+
+.hoverable-inverse {
+  color: hsl(216, 6%, 55%);
+  transition: color 0.1s;
+}
+
+.hoverable-inverse:hover {
+  color: #cccac6;
+}
+
+.bg-hoverable {
+  background: none;
+  transition: background-color 0.3s;
+}
+
+.bg-hoverable:hover {
+  background-color: rgb(33, 33, 33);
+}
+
+.text-hoverable:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .label {
   position: absolute;
   left: 10px;
-  top: 15px;
+  top: 12px;
   transition: all 0.2s;
   padding: 0 2px;
   font-weight: 300;
@@ -371,7 +426,7 @@
   height: 100%;
   border: 1px solid #c2c8d0a3;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
   outline: none;
   transition: all 0.3s;
   background-color: #0e0f0f;
@@ -452,6 +507,80 @@
 
 #nav li:hover ul {
   left: auto;
+}
+
+.button-anim-init {
+  padding: 5px 10px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #10a37f;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-anim-init:hover {
+  transition: background-color 0.3s;
+  background-color: #169474;
+}
+
+.button-anim-loading {
+  padding: 5px 10px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #10a37f;
+  border: none;
+  border-radius: 5px;
+}
+
+.button-anim-done {
+  padding: 5px 10px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #843bce00;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.1s;
+}
+
+.button-checkmark {
+  width: 20px;
+  height: 20px;
+  animation: scaleIn 1s cubic-bezier(0, 1.12, 0, 0.99), fadeOut 1s;
+  animation-delay: 0s;
+  animation-fill-mode: backwards;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes slide-down {

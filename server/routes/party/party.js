@@ -57,6 +57,10 @@ router.post("/:id", async (req, res) => {
   await pool
     .query(query, [username])
     .then((result) => {
+      if (result.rows.length === 0) {
+        res.json({ success: true });
+        return;
+      }
       const { user_id, username, img } = result.rows[0];
 
       const query2 = `INSERT INTO party_members (party_id,user_id) VALUES($1,$2)`;
@@ -71,11 +75,11 @@ router.post("/:id", async (req, res) => {
 router.get("/:id", async (req, res) => {
   jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, decoded) => {
     if (!err) {
-      const query = `SELECT u.user_id, u.name, u.username, u.img, pm.verified
-                 FROM users u
-                 JOIN party_members pm ON u.user_id = pm.user_id
-                 WHERE pm.party_id = $1
-                 ORDER BY CASE WHEN u.user_id=$2 THEN 0 ELSE 1 END;`;
+      const query = `SELECT u.user_id, u.name, u.username, u.img, u.level, u.xp, u.health, pm.verified
+                     FROM users u
+                     JOIN party_members pm ON u.user_id = pm.user_id
+                     WHERE pm.party_id = $1
+                     ORDER BY CASE WHEN u.user_id=$2 THEN 0 ELSE 1 END;`;
 
       pool
         .query(query, [req.params.id, decoded.user_id])
@@ -91,6 +95,19 @@ router.get("/:id", async (req, res) => {
 
 router.delete("/:partyId/members/:memberId", async (req, res) => {
   const query = `DELETE FROM party_members WHERE party_id=$1 AND user_id=$2;`;
+
+  pool
+    .query(query, [req.params.partyId, req.params.memberId])
+    .then((result) => {
+      res.json(result.rows);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.put("/:partyId/members/:memberId", async (req, res) => {
+  const query = `UPDATE party_members SET verified=1 WHERE party_id=$1 AND user_id=$2`;
 
   pool
     .query(query, [req.params.partyId, req.params.memberId])

@@ -3,23 +3,26 @@ import { useAuth } from "../../contexts/AuthContext";
 import NavbarDropdown from "./NavbarDropdown";
 import { useNavigate } from "react-router-dom";
 import NotificationIcon from "../icons/NotificationIcon";
+import NotificationDropdown from "./NotficationDropdown";
 
 const NavBar = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
   const [showNavbarDropdown, setShowNavbarDropdown] = useState(false);
+  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
 
   return (
     <div
       style={{
         width: "100%",
-        backgroundColor: "#141616",
         height: "40px",
         minHeight: "40px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
+        paddingTop: "8px",
+        paddingBottom: "8px",
       }}
       className="text-color"
     >
@@ -39,7 +42,9 @@ const NavBar = () => {
             height: "100%",
             alignItems: "center",
             cursor: "pointer",
+            marginBottom: "3px",
           }}
+          className="hoverable"
           onClick={() => navigate("/")}
         >
           room
@@ -47,14 +52,17 @@ const NavBar = () => {
         </div>
       </div>
       {auth.user && (
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", paddingRight: "12px" }}>
           <div
             style={{
               cursor: "pointer",
               padding: "0px 10px",
               marginBottom: "1px",
+              marginRight: "8px",
               fontSize: "small",
+              fontWeight: "600",
             }}
+            className="hoverable-inverse"
             onClick={() => navigate("/taskdashboard")}
           >
             Dashboard
@@ -65,18 +73,22 @@ const NavBar = () => {
               marginTop: "3px",
               position: "relative",
             }}
+            onClick={() => setShowNotificationDropdown(!showNotificationDropdown)}
           >
-            <div
-              style={{
-                width: "10px",
-                height: "10px",
-                borderRadius: "50%",
-                backgroundColor: "#c32940",
-                position: "absolute",
-                right: "0px",
-              }}
-            ></div>
-            <span style={{ cursor: "pointer" }}>
+            {auth.user?.notifications?.length != 0 && (
+              <div
+                style={{
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  backgroundColor: "#c32940",
+                  position: "absolute",
+                  right: "0px",
+                  cursor: "pointer",
+                }}
+              />
+            )}
+            <span style={{ cursor: "pointer" }} className="hoverable">
               <NotificationIcon width={24} height={24} />
             </span>
           </span>
@@ -84,15 +96,24 @@ const NavBar = () => {
             <button
               style={{
                 cursor: "pointer",
-                height: "35px",
+                height: "38px",
                 display: "flex",
                 marginRight: "5px",
-                background: "none",
+                marginBottom: "2px",
                 border: "none",
+                borderRadius: "3px",
+                paddingLeft: "10px",
+                paddingRight: "10px",
               }}
               onClick={() => setShowNavbarDropdown(!showNavbarDropdown)}
+              className="bg-hoverable"
             >
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
                     src={auth.user.img}
@@ -103,7 +124,7 @@ const NavBar = () => {
                     }}
                   />
                 </div>
-                <div style={{ padding: "0px 0px 0px 5px" }}>
+                <div style={{ padding: "0px 0px 0px 8px" }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -123,10 +144,39 @@ const NavBar = () => {
               </div>
             </button>
             {showNavbarDropdown && (
-              <NavbarDropdown
-                onClickOutside={() => setShowNavbarDropdown(false)}
-              />
+              <NavbarDropdown onClickOutside={() => setShowNavbarDropdown(false)} />
             )}
+            {showNotificationDropdown && (
+              <NotificationDropdown onClickOutside={() => setShowNotificationDropdown(false)} />
+            )}
+          </div>
+        </div>
+      )}
+      {!auth.user && (
+        <div style={{ display: "flex", alignItems: "center", paddingRight: "12px" }}>
+          <div
+            style={{
+              cursor: "pointer",
+              padding: "0px 10px",
+              marginBottom: "1px",
+              fontSize: "",
+            }}
+            className="hoverable"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </div>
+          <div
+            style={{
+              cursor: "pointer",
+              padding: "0px 10px",
+              marginBottom: "1px",
+              fontSize: "",
+            }}
+            className="hoverable"
+            onClick={() => navigate("/register")}
+          >
+            Register
           </div>
         </div>
       )}
