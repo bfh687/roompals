@@ -78,10 +78,7 @@ const EditProfileModalPopup = ({ user, onSave, onClickOutside }) => {
             Edit Profile
           </div>
           <div className="center">
-            <div
-              className="task-modal-cancel text-color"
-              onClick={() => onClickOutside()}
-            >
+            <div className="task-modal-cancel text-color" onClick={() => onClickOutside()}>
               Cancel
             </div>
             <button
@@ -97,21 +94,34 @@ const EditProfileModalPopup = ({ user, onSave, onClickOutside }) => {
         <div>
           <div style={{ paddingBottom: "24px" }}>
             <TextField caption="Name" text={name} onTextChange={setName} />
-            <TextField
-              caption="Username"
-              text={username}
-              onTextChange={setUsername}
-            />
-            <TextField
-              caption="Profile Picture"
-              text={img}
-              onTextChange={setImg}
-            />
-            <TextField
-              caption="Profile Header"
-              text={img2}
-              onTextChange={setImg2}
-            />
+            <TextField caption="Username" text={username} onTextChange={setUsername} />
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "100%" }}>
+                <TextField caption="Profile Picture" text={img} onTextChange={setImg} />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
+                  marginTop: "auto",
+                  background: "transparent",
+                }}
+              >
+                <img
+                  style={{
+                    background: "transparent",
+                    minWidth: "32px",
+                    height: "32px",
+                    marginRight: "25px",
+                    borderRadius: "3px",
+                    backgroundColor: "white",
+                  }}
+                  src={img}
+                />
+              </div>
+            </div>
+            <TextField caption="Profile Header" text={img2} onTextChange={setImg2} />
           </div>
         </div>
       </div>

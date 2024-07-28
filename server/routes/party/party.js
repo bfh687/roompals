@@ -5,29 +5,6 @@ const { pool } = require("../../utilities");
 
 const jwt = require("jsonwebtoken");
 
-router.get("/", async (req, res) => {
-  const token = req.cookies.token;
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      console.log(err);
-      res.status(400).json({
-        success: "false",
-        message: err,
-      });
-      return;
-    }
-
-    const query = `SELECT DISTINCT party_id FROM party_members WHERE user_id=$1`;
-
-    pool
-      .query(query, [decoded.id])
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => console.log(err));
-  });
-});
-
 router.post("/", async (req, res) => {
   const { userId, name } = req.body;
   const query = `INSERT INTO party (owner_id, name) VALUES($1, $2) RETURNING *`;
@@ -72,17 +49,16 @@ router.post("/:id", async (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/", async (req, res) => {
   jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, decoded) => {
     if (!err) {
-      const query = `SELECT u.user_id, u.name, u.username, u.img, u.level, u.xp, u.health, pm.verified
+      const query = `SELECT u.user_id, u.name, u.username, u.img, u.level, u.xp, u.health, pm.verified, pm.party_id
                      FROM users u
                      JOIN party_members pm ON u.user_id = pm.user_id
-                     WHERE pm.party_id = $1
-                     ORDER BY CASE WHEN u.user_id=$2 THEN 0 ELSE 1 END;`;
+                     ORDER BY CASE WHEN u.user_id=$1 THEN 0 ELSE 1 END;`;
 
       pool
-        .query(query, [req.params.id, decoded.user_id])
+        .query(query, [decoded.user_id])
         .then((result) => {
           res.json(result.rows);
         })

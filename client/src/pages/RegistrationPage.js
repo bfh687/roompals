@@ -45,7 +45,7 @@ const RegistrationPage = () => {
                   justifyContent: "center",
                   fontSize: "32px",
                   fontWeight: "bold",
-                  marginBottom: "16px",
+                  marginBottom: "36px",
                 }}
               >
                 Register
@@ -108,8 +108,17 @@ const RegistrationPage = () => {
                   Password
                 </label>
               </div>
-              <div style={{ width: "328px", marginTop: "16px" }}>
-                <button className="form-button" onClick={() => register()}>
+              <div style={{ width: "328px", marginTop: "24px" }}>
+                <button
+                  className="form-button"
+                  style={{
+                    display: "flex",
+                    height: "46px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  onClick={() => register()}
+                >
                   Continue
                 </button>
               </div>

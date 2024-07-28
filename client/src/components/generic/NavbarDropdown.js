@@ -26,6 +26,7 @@ const NavbarDropdown = ({ onClickOutside }) => {
         display: "flex",
         flexDirection: "column",
         boxShadow: "3px 3px 5px 5px rgba(0, 0, 0, 0.3)",
+        zIndex: "9999",
       }}
       className="text-color"
     >
@@ -49,10 +50,7 @@ const NavbarDropdown = ({ onClickOutside }) => {
             }}
           >
             <img
-              src={
-                auth.user.img ??
-                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-              }
+              src={auth.user.img ?? "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </div>

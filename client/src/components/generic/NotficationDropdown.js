@@ -119,12 +119,14 @@ const NavbarDropdown = ({ onClickOutside }) => {
                     <span style={{ margin: "0px 8px 0px 0px" }}>
                       <AnimationButton
                         text="Accept"
+                        width={83}
                         onClick={() => acceptRequest(notif.id)}
                         disappearAfterOnClick
                       />
                     </span>
                     <AnimationButton
                       text="Reject"
+                      width={83}
                       buttonColor="#c32940"
                       onClick={() => rejectRequest(notif.id)}
                       disappearAfterOnClick

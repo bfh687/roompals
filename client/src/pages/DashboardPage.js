@@ -1,138 +1,127 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import PartyHeader from "../components/PartyHeader/PartyHeader";
+import TextField from "../components/tasklist/modal/TextField";
 
 const DashboardPage = () => {
-  const auth = useAuth();
-  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [inviteCode, setInviteCode] = useState("");
 
   return (
-    <div className="text-color" style={{ height: "100%" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          height: "100%",
-        }}
-      >
-        <div style={{ width: "50%", maxWidth: "1000px", height: "100%", backgroundColor: "white" }}>
-          <div style={{ padding: "10px" }}>
-            <button
-              onClick={() => {
-                fetch("http://localhost:3000/api/party", {
-                  method: "GET",
-                })
-                  .then((res) => res.json())
-                  .then((res) => {
-                    console.log(res);
-                  })
-                  .catch((err) => console.log(err));
-              }}
-            >
-              Create Party
-            </button>
-          </div>
+    <div
+      className="text-color"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        paddingTop: "24px",
+        backgroundImage: "radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px)",
+        backgroundSize: "20px 20px",
+        height: "100%",
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <PartyHeader collapsed />
+        {/* <div style={{ fontWeight: "700", fontSize: "18px", marginTop: "8px" }}>
+          Create or Join a Party
+        </div> */}
+        <div
+          style={{
+            maxWidth: "320px",
+            textAlign: "center",
+            marginTop: "4px",
+            fontWeight: "400",
+            fontSize: "12px",
+          }}
+        >
+          To use roompals, you must be in a party. Create a party and invite your roommates, or if
+          your roommates already have a party - ask them to invite you!
+        </div>
+        <div style={{ display: "flex", marginTop: "16px" }}>
           <div
             style={{
               display: "flex",
-              flexWrap: "wrap",
+              flexDirection: "column",
               justifyContent: "center",
-              padding: "5px 5px",
+              alignItems: "center",
             }}
           >
-            <div
-              style={{
-                width: "200px",
-                height: "80px",
-                backgroundColor: "red",
-                borderRadius: "5px",
-                margin: "5px",
-                cursor: "pointer",
-              }}
-              onClick={() => navigate("/dashboard", { state: 1 })}
-            >
+            <div>
               <div
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  height: "100%",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  marginTop: "24px",
+                  textAlign: "center",
                 }}
               >
-                <div>pal party 1</div>
-                <div style={{ display: "flex" }}>
-                  <div style={{ padding: "1px" }}>
-                    <img
-                      style={{ width: "15px", height: "15px", borderRadius: "50%" }}
-                      src={auth.user?.img}
-                    />
-                  </div>
-                  <div style={{ padding: "1px" }}>
-                    <img
-                      style={{ width: "15px", height: "15px", borderRadius: "50%" }}
-                      src={auth.user?.img}
-                    />
-                  </div>
-                  <div style={{ padding: "1px" }}>
-                    <img
-                      style={{ width: "15px", height: "15px", borderRadius: "50%" }}
-                      src={auth.user?.img}
-                    />
-                  </div>
-                  <div style={{ padding: "1px" }}>
-                    <img
-                      style={{ width: "15px", height: "15px", borderRadius: "50%" }}
-                      src={auth.user?.img}
-                    />
-                  </div>
-                </div>
+                Create a Party
+              </div>
+              <div style={{ display: "flex", marginTop: "6px", flexDirection: "column" }}>
+                <TextField caption="Name" text={name} onTextChange={setName} />
               </div>
             </div>
             <div
               style={{
-                width: "200px",
-                height: "80px",
-                backgroundColor: "red",
-                borderRadius: "5px",
-                margin: "5px",
+                width: "160px",
+                marginTop: "22px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <div
+              <button
+                className="form-button"
                 style={{
                   display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  height: "100%",
+                  height: "20px",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <div>pal party 1</div>
-                <div style={{ display: "flex" }}>
-                  <div style={{ padding: "1px" }}>
-                    <img
-                      style={{ width: "15px", height: "15px", borderRadius: "50%" }}
-                      src={auth.user?.img}
-                    />
-                  </div>
-                  <div style={{ padding: "1px" }}>
-                    <img
-                      style={{ width: "15px", height: "15px", borderRadius: "50%" }}
-                      src={auth.user?.img}
-                    />
-                  </div>
-                  <div style={{ padding: "1px" }}>
-                    <img
-                      style={{ width: "15px", height: "15px", borderRadius: "50%" }}
-                      src={auth.user?.img}
-                    />
-                  </div>
-                  <div style={{ padding: "1px" }}>
-                    <img
-                      style={{ width: "15px", height: "15px", borderRadius: "50%" }}
-                      src={auth.user?.img}
-                    />
-                  </div>
-                </div>
-              </div>
+                Continue
+              </button>
+            </div>
+          </div>
+          <div
+            style={{
+              fontWeight: "600",
+              fontSize: "12px",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "0px 10px",
+            }}
+          >
+            <i>Or</i>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div
+              style={{
+                fontWeight: "600",
+                fontSize: "14px",
+                marginTop: "24px",
+                textAlign: "center",
+              }}
+            >
+              Join a Party
+            </div>
+            <div style={{ display: "flex", marginTop: "6px" }}>
+              <TextField caption="Invite Code" text={inviteCode} onTextChange={setInviteCode} />
+            </div>
+            <div style={{ width: "160px", marginTop: "22px" }}>
+              <button
+                className="form-button"
+                style={{
+                  display: "flex",
+                  height: "20px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                Continue
+              </button>
             </div>
           </div>
         </div>

@@ -10,8 +10,7 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const [showNavbarDropdown, setShowNavbarDropdown] = useState(false);
-  const [showNotificationDropdown, setShowNotificationDropdown] =
-    useState(false);
+  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
 
   return (
     <div
@@ -60,6 +59,36 @@ const NavBar = () => {
             paddingRight: "12px",
           }}
         >
+          {false && (
+            <>
+              <div
+                style={{
+                  cursor: "pointer",
+                  padding: "0px 10px",
+                  marginBottom: "1px",
+                  fontSize: "small",
+                  fontWeight: "600",
+                }}
+                className="hoverable-inverse"
+                onClick={() => navigate("/tasks")}
+              >
+                Tasks
+              </div>
+              <div
+                style={{
+                  cursor: "pointer",
+                  padding: "0px 10px",
+                  marginBottom: "1px",
+                  fontSize: "small",
+                  fontWeight: "600",
+                }}
+                className="hoverable-inverse"
+                onClick={() => navigate("/finances")}
+              >
+                Finances
+              </div>
+            </>
+          )}
           <div
             style={{
               cursor: "pointer",
@@ -70,7 +99,7 @@ const NavBar = () => {
               fontWeight: "600",
             }}
             className="hoverable-inverse"
-            onClick={() => navigate("/taskdashboard")}
+            onClick={() => navigate("/dashboard")}
           >
             Dashboard
           </div>
@@ -80,9 +109,7 @@ const NavBar = () => {
               marginTop: "3px",
               position: "relative",
             }}
-            onClick={() =>
-              setShowNotificationDropdown(!showNotificationDropdown)
-            }
+            onClick={() => setShowNotificationDropdown(!showNotificationDropdown)}
           >
             {auth.user?.notifications?.length != 0 && (
               <div
@@ -97,7 +124,7 @@ const NavBar = () => {
                 }}
               />
             )}
-            <span style={{ cursor: "pointer" }} className="hoverable">
+            <span style={{ cursor: "pointer" }} className="hoverable-inverse">
               <NotificationIcon width={24} height={24} />
             </span>
           </span>
@@ -125,10 +152,7 @@ const NavBar = () => {
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
-                    src={
-                      auth.user.img ??
-                      "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                    }
+                    src={auth.user.img ?? "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
                     style={{
                       height: "30px",
                       width: "30px",
@@ -156,14 +180,10 @@ const NavBar = () => {
               </div>
             </button>
             {showNavbarDropdown && (
-              <NavbarDropdown
-                onClickOutside={() => setShowNavbarDropdown(false)}
-              />
+              <NavbarDropdown onClickOutside={() => setShowNavbarDropdown(false)} />
             )}
             {showNotificationDropdown && (
-              <NotificationDropdown
-                onClickOutside={() => setShowNotificationDropdown(false)}
-              />
+              <NotificationDropdown onClickOutside={() => setShowNotificationDropdown(false)} />
             )}
           </div>
         </div>

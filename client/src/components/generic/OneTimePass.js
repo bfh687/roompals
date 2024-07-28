@@ -110,11 +110,7 @@ const OneTimePass = () => {
         })}
       </div>
       <div style={{ width: "328px", marginTop: "24px" }}>
-        <button
-          className="form-button"
-          onClick={() => validateOneTimePass()}
-          ref={buttonRef}
-        >
+        <button className="form-button" onClick={() => validateOneTimePass()} ref={buttonRef}>
           Continue
         </button>
       </div>

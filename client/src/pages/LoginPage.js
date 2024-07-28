@@ -76,7 +76,16 @@ const LoginPage = () => {
               Forgot password?
             </div>
             <div style={{ width: "328px", marginTop: "24px" }}>
-              <button className="form-button" onClick={() => auth.login(email, password)}>
+              <button
+                className="form-button"
+                style={{
+                  display: "flex",
+                  height: "46px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onClick={() => auth.login(email, password)}
+              >
                 Continue
               </button>
             </div>
